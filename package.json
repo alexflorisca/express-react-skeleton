@@ -4,29 +4,31 @@
   "author": "Alex Florisca",
   "version": "0.1.0",
   "main": "server/app.js",
-	"private": true,
-	"repository": {
+  "private": true,
+  "repository": {
     "type": "git",
     "url": "git@github.com:alexflorisca/express-react-skeleton.git"
   },
-	"scripts": {
-    "start": "node server/app.js",
-		"start:dev": "npm run start & npm run dev",
-		"dev": "parcel watch client/index.html",
+  "scripts": {
+    "start": "pm2 start server/app.js -i max -o server/logs/output.log -e server/logs/error.log --time",
+    "start:dev": "node server/app.js & npm run dev",
+    "dev": "parcel watch client/index.html",
     "build": "rm -rf ./dist && parcel build client/index.html"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "eslint": "^6.5.1",
     "express": "^4.17.1",
+    "morgan": "^1.9.1",
     "parcel-bundler": "^1.12.4",
+    "pm2": "^4.1.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.6.4",
-    "babel-preset-react-app": "^9.0.2",
-		"npm-run-all": "^4.1.5"
-	},
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "babel-preset-react-app": "^9.0.2"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
