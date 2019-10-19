@@ -1,15 +1,19 @@
 {
-  "name": "alexflorisca.co.uk",
+	"name": "alexflorisca.co.uk",
+	"description": "A skeleton for an express app with a react front-end",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-	},
-	"repository": {
-		"type": "git",
-    "url": "git@github.com:alexflorisca/express-react-skeleton.git"
-	},
-  "scripts": {
+    "eslint": "^6.5.1",
+    "express": "^4.17.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alexflorisca/express-react-skeleton.git"
+  },
+  "scripts": {
+		"start": "node --experimental-modules server.js"
+	},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -26,5 +30,8 @@
     "presets": [
       "react-app"
     ]
+	},
+	"engines": {
+    "node": "12.4.0"
   }
 }
