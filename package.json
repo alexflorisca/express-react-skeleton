@@ -10,7 +10,7 @@
     "url": "git@github.com:alexflorisca/express-react-skeleton.git"
   },
   "scripts": {
-    "start": "pm2 start server/app.js -i max -o server/logs/output.log -e server/logs/error.log --time",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
     "start:dev": "node server/app.js & npm run dev",
     "dev": "parcel watch client/index.html",
     "build": "rm -rf ./dist && parcel build client/index.html"
