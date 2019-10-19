@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import Nav from './Nav';
-import Home from './Home';
+import { Home, About, Contact } from './Pages';
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       <Nav />
       <Switch>
 				<Route exact path="/"><Home /></Route>
-				<Route path="/me"><Me /></Route>
-				<Route path="/me-too"><MeToo /></Route>
+				<Route path="/about"><About /></Route>
+				<Route path="/contact"><Contact /></Route>
 			</Switch>
     </div>
   );
