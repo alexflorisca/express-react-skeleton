@@ -6,6 +6,7 @@ function App() {
     <div className="App">
       <header>
       	<h1>Express React Skeleton</h1>
+        <p>&lt;App /&gt; component rendered</p>
       </header>
     </div>
   );
