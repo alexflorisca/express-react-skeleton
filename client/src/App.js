@@ -1,13 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './App.css';
+import Nav from './Nav';
+import Home from './Home';
 
 function App() {
   return (
     <div className="App">
-      <header>
-      	<h1>Express React Skeleton</h1>
-        <p>&lt;App /&gt; component rendered</p>
-      </header>
+      <Nav />
+      <Switch>
+				<Route exact path="/"><Home /></Route>
+				<Route path="/me"><Me /></Route>
+				<Route path="/me-too"><MeToo /></Route>
+			</Switch>
     </div>
   );
 }
