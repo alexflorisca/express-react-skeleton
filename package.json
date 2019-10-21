@@ -11,7 +11,8 @@
   },
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production",
-    "start:dev": "node server/server.js & npm run dev",
+    "start:temp": "node server/index.js",
+    "start:dev": "node server/index.js & npm run dev",
     "dev": "parcel watch client/index.html",
     "build": "rm -rf ./dist && parcel build client/index.html"
   },
@@ -28,6 +29,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "babel-core": "^6.26.3",
     "babel-preset-react-app": "^9.0.2"
   },
   "browserslist": {
@@ -44,7 +48,8 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "@babel/preset-env",
+      "@babel/preset-react"
     ]
   },
   "engines": {
