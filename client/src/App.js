@@ -8,6 +8,7 @@ function App() {
   return (
     <div id="app">
       <Nav />
+      Oh heeey asd
       <Switch>
 				<Route exact path="/"><Home /></Route>
 				<Route path="/about"><About /></Route>

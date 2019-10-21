@@ -3,7 +3,7 @@
   "description": "A skeleton for an express app with a react front-end",
   "author": "Alex Florisca",
   "version": "0.1.0",
-  "main": "server/server.js",
+  "main": "dist/server.js",
   "private": true,
   "repository": {
     "type": "git",
@@ -12,12 +12,17 @@
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "start:temp": "node server/index.js",
-    "start:dev": "node server/index.js & npm run dev",
-    "dev": "parcel watch client/index.html",
-    "build": "rm -rf ./dist && parcel build client/index.html"
+    "start:dev": "node dist/server",
+    "dev": "rm -rf dist/client && parcel watch client/index.html -d dist/client",
+    "dev:server": "nodemon dist/server",
+    "create-bundles": "concurrently \"npm run create-bundle:client\" \"npm run create-bundle:server\"",
+    "create-bundle:client": "cross-env BABEL_ENV=client parcel build client/index.html -d dist/client --public-url /dist/client",
+    "create-bundle:server": "cross-env BABEL_ENV=server parcel build server/index.js -d dist/server --public-url /dist --target=node",
+    "build": "rm -rf ./dist/server && npm run create-bundle:server"
   },
   "dependencies": {
     "compression": "^1.7.4",
+    "cross-env": "^6.0.3",
     "eslint": "^6.5.1",
     "express": "^4.17.1",
     "morgan": "^1.9.1",
@@ -25,6 +30,7 @@
     "pm2": "^4.1.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-imported-component": "^6.2.0",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
@@ -32,25 +38,25 @@
     "@babel/preset-react": "^7.6.3",
     "@babel/register": "^7.6.2",
     "babel-core": "^6.26.3",
-    "babel-preset-react-app": "^9.0.2"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "babel-preset-react-app": "^9.0.2",
+    "concurrently": "^5.0.0",
+    "nodemon": "^1.19.4"
   },
   "babel": {
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
     ]
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*",
+      "client/*",
+      "package.json",
+      "package-lock.json"
+    ],
+    "delay": "2500",
+    "exec": "npm run build && npm run start:dev"
   },
   "engines": {
     "node": "12.4.0"
