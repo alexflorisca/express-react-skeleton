@@ -11,14 +11,10 @@
   },
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production",
-    "start:temp": "node server/index.js",
-    "start:dev": "node dist/server",
-    "dev": "rm -rf dist/client && parcel watch client/index.html -d dist/client",
-    "dev:server": "nodemon dist/server",
-    "create-bundles": "concurrently \"npm run create-bundle:client\" \"npm run create-bundle:server\"",
-    "create-bundle:client": "cross-env BABEL_ENV=client parcel build client/index.html -d dist/client --public-url /dist/client",
-    "create-bundle:server": "cross-env BABEL_ENV=server parcel build server/index.js -d dist/server --public-url /dist --target=node",
-    "build": "rm -rf ./dist/server && npm run create-bundle:server"
+    "dev": "parcel watch client/index.html",
+    "dev:server": "nodemon server",
+    "create-bundle": "cross-env BABEL_ENV=client parcel build client/index.html",
+    "build": "rm -rf ./dist && npm run create-bundle"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -51,12 +47,10 @@
   "nodemonConfig": {
     "ignore": [
       "dist/*",
-      "client/*",
       "package.json",
       "package-lock.json"
     ],
-    "delay": "2500",
-    "exec": "npm run build && npm run start:dev"
+    "delay": "2500"
   },
   "engines": {
     "node": "12.4.0"

@@ -8,10 +8,10 @@ import ssr from './ssr';
 const server = express();
 
 server.use(compression());
-server.use(morgan('combined'))
+server.use(morgan('combined'));
 
 // Server static files created by Parcel
-server.use('/dist/client', express.static('dist/client'));
+server.use('/dist', express.static('dist'));
 
 // Server Side Rendering
 server.get("/*", ssr);
