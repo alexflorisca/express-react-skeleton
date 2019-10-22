@@ -1,5 +1,3 @@
-
-import path from 'path';
 import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -10,10 +8,12 @@ const server = express();
 server.use(compression());
 server.use(morgan('combined'));
 
-// Server static files created by Parcel
+// Server static files created by Parcel from /dist
 server.use('/dist', express.static('dist'));
 
 // Server Side Rendering
 server.get("/*", ssr);
 
+// Need to module.exports here to work 
+// with non babelified server/index.html
 module.exports = server;

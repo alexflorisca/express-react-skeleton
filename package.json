@@ -3,7 +3,7 @@
   "description": "A skeleton for an express app with a react front-end",
   "author": "Alex Florisca",
   "version": "0.1.0",
-  "main": "dist/server.js",
+  "main": "server/index.js",
   "private": true,
   "repository": {
     "type": "git",
@@ -11,10 +11,9 @@
   },
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production",
-    "dev": "parcel watch client/index.html",
+    "dev:client": "parcel watch client/index.html --public-url /dist",
     "dev:server": "nodemon server",
-    "create-bundle": "cross-env BABEL_ENV=client parcel build client/index.html",
-    "build": "rm -rf ./dist && npm run create-bundle"
+    "build": "rimraf ./dist && parcel build client/index.html --public-url /dist"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -36,7 +35,8 @@
     "babel-core": "^6.26.3",
     "babel-preset-react-app": "^9.0.2",
     "concurrently": "^5.0.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "rimraf": "^3.0.0"
   },
   "babel": {
     "presets": [
@@ -46,9 +46,7 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "dist/*",
-      "package.json",
-      "package-lock.json"
+      "dist/*"
     ],
     "delay": "2500"
   },

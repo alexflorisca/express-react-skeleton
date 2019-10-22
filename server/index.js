@@ -1,6 +1,6 @@
 
 require("@babel/register")({
-	only: [/client/, /server/, /config/]
+	only: [/client/, /server/]
 });
 
 const server = require('./server');

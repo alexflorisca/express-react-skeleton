@@ -1,22 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './src/App';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { rehydrateMarks } from 'react-imported-component';
+import { BrowserRouter } from 'react-router-dom';
 
 const rootEl = document.getElementById('app');
-const app = <Router><App /></Router>;
+const app = <BrowserRouter><App /></BrowserRouter>;
 
-if(process.env.NODE_ENV === 'production') {
-	rehydrateMarks().then(() => {
-		console.log("hydrating");
-		ReactDOM.hydrate(app, element);
-	})
-}
-else {
-	console.log("rendering");
-	ReactDOM.render(app, rootEl);
-}
+// Assume server rendered markup from `npm run dev:server`
+// Rehydrating client
+ReactDOM.hydrate(app, rootEl);
 
 if (module.hot) {
   module.hot.accept();

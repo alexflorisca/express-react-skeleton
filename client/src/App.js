@@ -6,9 +6,8 @@ import { Home, About, Contact } from './Pages';
 
 function App() {
   return (
-    <div id="app">
+    <div>
       <Nav />
-      Oh heeey boooy
       <Switch>
 				<Route exact path="/"><Home /></Route>
 				<Route path="/about"><About /></Route>

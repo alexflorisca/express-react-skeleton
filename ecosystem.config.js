@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'Express React App',
-    script: 'dist/server',
+    script: 'server/index.js',
     args: '',
     instances: 'max',
     autorestart: true,
