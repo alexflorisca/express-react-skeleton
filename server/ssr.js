@@ -59,7 +59,7 @@ export default (req, res) => {
 
 		// Get the full HTML for the page
 		const pageMarkup = getHtmlMarkup(appMarkup);
-		console.log(pageMarkup);
+
 		// Return the full HTML page to the browser
 		res.send(pageMarkup);
 	} catch(e) {
