@@ -31,13 +31,16 @@
     "pm2": "^4.1.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-helmet-async": "^1.0.4",
     "react-imported-component": "^6.2.0",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
     "concurrently": "^5.0.0",
+    "ignore-styles": "^5.0.1",
     "nodemon": "^1.19.4",
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.0",
+    "sass": "^1.23.0"
   },
   "babel": {
     "presets": [

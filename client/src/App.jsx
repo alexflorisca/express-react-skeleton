@@ -1,8 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 import Nav from './Nav';
-import { Home, About, Contact } from './Pages';
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 function App() {
   return (

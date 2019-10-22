@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import App from '../client/src/App';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 /**
  * Split 'dist/index.html' in two parts so we can insert
@@ -48,11 +49,24 @@ export default (req, res) => {
 	try {
 		// TODO: You can get application state data here
 		const context = {};
+
+		const helmetContext = context.head || {};
 		
 		// Create a static react router and get the <App /> 
 		// component markup for the current URL and context
-		const router = <StaticRouter location={req.originalUrl} context={context}><App /></StaticRouter>;
+		const router = (
+			<HelmetProvider context={helmetContext}>
+				<StaticRouter location={req.originalUrl} context={context}>
+					<Helmet>
+						<title>Just testing</title>
+					</Helmet>
+					<App />
+				</StaticRouter>
+			</HelmetProvider>
+		);
 		const appMarkup = ReactDOM.renderToString(router);
+
+		log.info(appMarkup);
 
 		// Redirect if necessary
 		if(context.url) {
