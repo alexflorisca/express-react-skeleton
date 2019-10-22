@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 const rootEl = document.getElementById('app');
 const app = <BrowserRouter><App /></BrowserRouter>;
 
-// Assume server rendered markup from `npm run dev:server`
+// Assume server rendered markup`
 // Rehydrating client
 ReactDOM.hydrate(app, rootEl);
 

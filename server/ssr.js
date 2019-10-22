@@ -1,4 +1,5 @@
 import fs from 'fs';
+import log from 'loglevel';
 import path from 'path';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -45,8 +46,9 @@ function getHtmlMarkup (markup) {
  */
 export default (req, res) => {
 	try {
-		// TODO: Get application state data here
+		// TODO: You can get application state data here
 		const context = {};
+		
 		// Create a static react router and get the <App /> 
 		// component markup for the current URL and context
 		const router = <StaticRouter location={req.originalUrl} context={context}><App /></StaticRouter>;
@@ -54,6 +56,7 @@ export default (req, res) => {
 
 		// Redirect if necessary
 		if(context.url) {
+			log.info(`301 Redirect from context.url: ${context.url}`);
 			res.send(301, context.url);
 		}
 
@@ -63,8 +66,7 @@ export default (req, res) => {
 		// Return the full HTML page to the browser
 		res.send(pageMarkup);
 	} catch(e) {
-		//TODO: Log error properly
-		console.error(e);
+		log.error(e);
 		res.status(500);
 		res.end();
 	}
