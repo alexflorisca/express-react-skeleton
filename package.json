@@ -13,9 +13,14 @@
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "dev:client": "parcel watch client/index.html --public-url /dist",
     "dev:server": "nodemon server",
-    "build": "rimraf ./dist && parcel build client/index.html --public-url /dist"
+    "build": "rimraf ./dist && parcel build client/index.html --public-url /dist",
+    "clean": "concurrently \"rimraf .cache\" \"rimraf dist\" \"rimraf node_modules\""
   },
   "dependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/register": "^7.6.2",
     "compression": "^1.7.4",
     "cross-env": "^6.0.3",
     "eslint": "^6.5.1",
@@ -29,11 +34,6 @@
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-react": "^7.6.3",
-    "@babel/register": "^7.6.2",
-    "babel-core": "^6.26.3",
-    "babel-preset-react-app": "^9.0.2",
     "concurrently": "^5.0.0",
     "nodemon": "^1.19.4",
     "rimraf": "^3.0.0"
