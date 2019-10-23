@@ -1,12 +1,10 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Title } from 'react-head';
 
 function About() {
 	return (
 		<section id="about">
-			<Helmet>
-				<title>About Me</title>
-			</Helmet>
+				<Title>About Me</Title>
 			<h1>About me</h1>
 			<p>I'm awesome</p>
 		</section>

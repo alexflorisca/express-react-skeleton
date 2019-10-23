@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './src/App';
 import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { HeadProvider } from 'react-head';
 
 const rootEl = document.getElementById('app');
 const app = (
-  <HelmetProvider>
+  <HeadProvider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </HelmetProvider>
+  </HeadProvider>
 );
 
 // Assume server rendered markup`

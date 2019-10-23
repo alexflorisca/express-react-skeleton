@@ -2,42 +2,53 @@ import fs from 'fs';
 import log from 'loglevel';
 import path from 'path';
 import React from 'react';
-import ReactDOM from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+import { HeadProvider } from 'react-head';
 import App from '../client/src/App';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+
+const SPLITTER = '###SPLIT###';
+const appString = '<div id="app">';
 
 /**
- * Split 'dist/index.html' in two parts so we can insert
- * the <App /> component later
+ * Read dist/index.html and return as a string
  * 
- * @return {Array} [startingHtml, endHtml]
+ * @return {String} dist/index.html
  */
-// function splitIndexHtml() {
+function getIndexHtml() {
 	// Get the HTML from the built index.html
 	const htmlPath = path.join(process.cwd(), 'dist', 'index.html');
-	const rawHtml = fs.readFileSync(htmlPath).toString();
-
-	const appString = '<div id="app">';
-	const splitter = '###SPLIT###';
-
-	// Split the HTML into two
-	const [startingHtml, endHtml] = rawHtml
-		.replace(appString, `${appString}${splitter}`)
-		.split(splitter);
-// }
-
-/**
- * Insert the <App /> component markup and return full page HTML to be rendered
- * 
- * @param {String} markup The <App /> component markup
- * @return {String} HTML markup for an entire page
- */
-function getHtmlMarkup (markup) {
-	// const [startingHtml, endHtml] = splitIndexHtml();
-	return `${startingHtml}${markup}${endHtml}`;
+	return fs.readFileSync(htmlPath).toString();
 }
 
+/**
+ * Insert tags into the <head> of the html markup
+ * 
+ * @param {String} html HTML Markup of the page
+ * @param {String} headMarkup HTMl Markup of <head> tags to insert into the page
+ */
+function insertHeadMarkup(html, headMarkup) {
+	const [startMarkup, endMarkup] = html.replace('<head>', `<head>${SPLITTER}`).split(SPLITTER);
+	return `${startMarkup}${headMarkup}${endMarkup}`;
+}
+
+
+/**
+ * Insert the <App /> component markup in HTML
+ * 
+ * @param {String} appMarkup The <App /> component markup
+ * @return {String} HTML markup for an entire page
+ */
+function insertAppMarkup(html, appMarkup) {
+	// Split the HTML into two
+	const [startingHtml, endHtml] = html
+		.replace(appString, `${appString}${SPLITTER}`)
+		.split(SPLITTER);
+
+		return `${startingHtml}${appMarkup}${endHtml}`;
+}
+
+const lift2 = f => g => h => x => f(g(x))(h(x));
 
 /**
  * Render a page on request
@@ -50,21 +61,19 @@ export default (req, res) => {
 		// TODO: You can get application state data here
 		const context = {};
 
-		const helmetContext = context.head || {};
+		const headTags = [];
 		
 		// Create a static react router and get the <App /> 
 		// component markup for the current URL and context
 		const router = (
-			<HelmetProvider context={helmetContext}>
+			<HeadProvider headTags={headTags}>
 				<StaticRouter location={req.originalUrl} context={context}>
-					<Helmet>
-						<title>Just testing</title>
-					</Helmet>
 					<App />
 				</StaticRouter>
-			</HelmetProvider>
+			</HeadProvider>
 		);
-		const appMarkup = ReactDOM.renderToString(router);
+		const appMarkup = renderToString(router);
+		const headMarkup = renderToString(headTags);
 
 		log.info(appMarkup);
 
@@ -75,7 +84,8 @@ export default (req, res) => {
 		}
 
 		// Get the full HTML for the page
-		const pageMarkup = getHtmlMarkup(appMarkup);
+		// TODO: Make this more functional
+		const pageMarkup = insertAppMarkup(insertHeadMarkup(getIndexHtml(), headMarkup), appMarkup);
 
 		// Return the full HTML page to the browser
 		res.send(pageMarkup);
