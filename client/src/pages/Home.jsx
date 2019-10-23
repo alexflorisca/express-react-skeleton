@@ -4,7 +4,7 @@ import { Title } from 'react-head';
 function Home() {
 	return (
 		<section id="home">
-			<Title>express React Skeleton</Title>
+			<Title>Express React Skeleton</Title>
 			<h1>Express React Skeleton</h1>
 			<p>Go Me</p>
 		</section>

@@ -25,6 +25,7 @@
     "cross-env": "^6.0.3",
     "eslint": "^6.5.1",
     "express": "^4.17.1",
+    "ignore-styles": "^5.0.1",
     "loglevel": "^1.6.4",
     "morgan": "^1.9.1",
     "parcel-bundler": "^1.12.4",
@@ -32,14 +33,11 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-head": "^3.1.1",
-    "react-helmet-async": "^1.0.4",
     "react-imported-component": "^6.2.0",
-    "react-router-dom": "^5.1.2",
-    "through": "^2.3.8"
+    "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
     "concurrently": "^5.0.0",
-    "ignore-styles": "^5.0.1",
     "nodemon": "^1.19.4",
     "rimraf": "^3.0.0",
     "sass": "^1.23.0"
