@@ -1,3 +1,6 @@
+/*
+  server/server.js - our simple  express server
+*/
 import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -16,6 +19,7 @@ server.use('/dist', express.static('dist', {
 
 // Server Side Rendering
 server.get("/*", ssr);
+
 // Need to module.exports here to work 
 // with non babelified server/index.html
 module.exports = server;

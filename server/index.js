@@ -1,4 +1,11 @@
+/* 
+	server/index.js - entry point for the node server
+*/
+
 // Transpile all require/imports from here on out
+// This is the easiest way I found to run a server
+// without having to rebuild assets with every hot
+// reload.
 require("@babel/register")({
 	only: [/client/, /server/]
 });
@@ -15,6 +22,7 @@ if(process.env.NODE_ENV === 'production') {
 	log.setLevel('trace');
 }
 
+// Get our server and listen
 const server = require('./server');
 const port = process.env.PORT || 3000;
 

@@ -6,7 +6,7 @@ function Home() {
 		<section id="home">
 			<Title>Express React Skeleton</Title>
 			<h1>Express React Skeleton</h1>
-			<p>Go Me</p>
+			<p>Super simple server side rendered react app.</p>
 		</section>
 	);
 }

@@ -7,6 +7,7 @@ import { StaticRouter } from 'react-router-dom';
 import { HeadProvider } from 'react-head';
 import App from '../client/src/App';
 
+// We're going to split a HTML file in two so that we can insert things in the middle
 const SPLITTER = '###SPLIT###';
 const appString = '<div id="app">';
 
@@ -62,28 +63,41 @@ export default (req, res) => {
 
 		const headTags = [];
 		
-		// Create a static react router and get the <App /> 
-		// component markup for the current URL and context
-		const router = (
+		/* Here we get the markup for our main <App> component, wrapped in a couple of
+			 goodies.
+
+			 <HeadProvider>: We may want to insert things into the <head> section of the app 
+			                 dynamically, based on the URL. <HeadProvider> helps us do that
+											 More info: https://github.com/tizmagik/react-head 
+
+			 <StaticRouter>: The App component needs to know which page to render, so we create 
+												a static react router and pass it the url that was requested by the 
+												client (req.originalUrl), and the context which can contain the 
+												application state data
+												More info: https://reacttraining.com/react-router/web/guides/server-rendering
+	  */
+		const wrappedApp = (
 			<HeadProvider headTags={headTags}>
+				{ /* Here we create a static react router and pass it the url
+					that was requested by the client (req.originalUrl), and the 
+					context which can contain the application state data */ }
 				<StaticRouter location={req.originalUrl} context={context}>
 					<App />
 				</StaticRouter>
 			</HeadProvider>
 		);
-		const appMarkup = renderToString(router);
+
+		const appMarkup = renderToString(wrappedApp);
 		const headMarkup = renderToString(headTags);
 
-		log.info(appMarkup);
-
-		// Redirect if necessary
+		// Redirect if necessary, based on context
 		if(context.url) {
 			log.info(`301 Redirect from context.url: ${context.url}`);
 			res.send(301, context.url);
 		}
 
 		// Get the full HTML for the page
-		// TODO: Make this more functional
+		// TODO: This is ugly, make it more functional
 		const pageMarkup = insertAppMarkup(insertHeadMarkup(getIndexHtml(), headMarkup), appMarkup);
 
 		// Return the full HTML page to the browser
